@@ -1,0 +1,6 @@
+dnspython
+yamllint==1.24.2
+ansible-lint==4.3.4
+openshift==0.13.1
+pyvim==3.0.2
+pyvmomi==7.0

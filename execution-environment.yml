@@ -1,0 +1,52 @@
+---
+version: 3
+images:
+  base_image:
+    name: registry.access.redhat.com/ubi9/ubi-minimal:9.3-1552
+    # name: registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8@sha256:3eaa57194c3f46c97a6a9bc497c9e61fc37e906e8cdab8f1f5a11bc33d59f14c
+    # name: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8@sha256:dd834d88ea9634e42d74dce9a08722322e61d211ee557056b4b4f7ded81442ee
+dependencies:
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
+  galaxy:
+    collections:
+      - name: azure.azcollection
+        version: 1.19.0
+      - name: kubernetes.core
+        version: 3.0.0
+  python:
+    - dnspython
+    - yamllint==1.24.2
+    - ansible-lint==4.3.4
+    - openshift==0.13.1
+    - pyvim==3.0.2
+    - pyvmomi==7.0
+options:
+  package_manager_path: /usr/bin/microdnf
+additional_build_steps:
+  prepend_builder:
+    - | 
+      RUN microdnf --setopt=install_weak_deps=0 --nodocs -y install \
+        bash \
+        gcc \
+        libffi-devel \
+        git \
+        gpgme-devel \
+        libxml2-devel \
+        libxslt-devel \
+        curl-minimal \
+        cargo \
+        openssl-devel \
+        python3-devel \
+        cmake \
+        gcc-c++ \
+        unzip && \
+      microdnf clean all
+# additional_build_files:
+#   - src: ./ansible.cfg
+#     dest: configs
+    
+
+  
