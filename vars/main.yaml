@@ -1,4 +1,4 @@
 # kubectl_context: 
 
-ansible_python_interpreter: ./virtualenv/bin/python
+ansible_python_interpreter: /usr/bin/python3.9
 staging_dir: "{{ playbook_dir }}/staging"
